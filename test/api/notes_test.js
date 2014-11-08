@@ -16,7 +16,7 @@ describe('basic notes crud', function() {
     .send({noteBody: 'hello world'})
     .end(function(err, res) {
       expect(err).to.eql(null);
-      console.log(res);
+      //console.log(res);
       //expect(res.body.noteBody).to.eql('hello world');
       //expect(res.body).to.have.property('_id');
       id = res.body._id;
