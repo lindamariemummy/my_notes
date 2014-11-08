@@ -22,7 +22,8 @@
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-jshint": "^0.10.0",
-    "grunt-simple-mocha": "^0.4.0"
+    "grunt-simple-mocha": "^0.4.0",
+    "mongodb-uri": "^0.9.7"
   },
   "dependencies": {
     "body-parser": "^1.9.2",

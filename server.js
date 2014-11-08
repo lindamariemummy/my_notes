@@ -1,6 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyparser = require('body-parser');
+var uriUtil = require('mongodb-uri');
 var app = express();
 
 app.use(bodyparser.json());
@@ -8,10 +9,12 @@ app.use(bodyparser.json());
 
 //code from https://github.com/mongolab/mongodb-driver-examples/blob/
 // master/nodejs/mongooseSimpleExample.js
-var mongodbUri = 'mongodb://heroku_app31292297:hfvmdkr6ndssg4cbimge6oinam@ds051740.mongolab.com:51740/heroku_app31292297'
-//'mongodb://heroku_app31292297:hfvmdkr6ndssg4cbimge6oinam@ds051740.mongolab.com:51740/heroku_app31292297';
-var mongooseUri = uriUtil.formatMongoose(mongodbUri);
-mongoose.connect(mongooseUri);
+
+var options = { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
+                replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 30000 } } };
+var mongodbUri = 'mongodb://heroku_app31292297:hfvmdkr6ndssg4cbimge6oinam@ds051740.mongolab.com:51740/heroku_app31292297';
+//var mongooseUri = uriUtil.formatMongoose(mongodbUri);
+mongoose.connect(mongodbUri, options);
 
 
 

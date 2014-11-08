@@ -10,7 +10,8 @@ var expect = chai.expect;
 describe('basic notes crud', function() {
   var id;
   it('should be able to create a note', function(done) {
-    chai.request('http://localhost:3000')
+    chai.request('https://fathomless-refuge-1297.herokuapp.com')
+    //chai.request('http://localhost:3000')
     .post('/api/notes')
     .send({noteBody: 'hello world'})
     .end(function(err, res) {
