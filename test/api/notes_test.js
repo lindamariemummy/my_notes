@@ -16,7 +16,6 @@ describe('basic notes crud', function() {
     .send({noteBody: 'new note', noteAuthor: 'Linda'})
     .end(function(err, res) {
       expect(err).to.eql(null);
-      //console.log(res);
       expect(res.body.noteAuthor).to.eql('Linda');
       expect(res.body).to.have.property('_id');
       id = res.body._id;
@@ -29,7 +28,6 @@ describe('basic notes crud', function() {
     .post('/api/notes')
     .send({noteBody: 'Hello I am a new note', noteAuthor: 'Freddy'})
     .end(function(err, res) {
-      console.log(res);
       expect(res.statusCode).to.eql(500);
       done();
     });
@@ -52,7 +50,7 @@ describe('basic notes crud', function() {
     .get('/api/notes/' + id)
     .end(function(err, res) {
       expect(err).to.eql(null);
-      expect(res.body.noteBody).to.eql('testing notes');
+      expect(res.body.noteBody).to.eql('new note');
       done();
     });
   });
