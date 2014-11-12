@@ -1,8 +1,8 @@
 'use strict';
 var Note = require('../models/note');
 
-module.exports = function(app) {
-  app.get('/api/notes', function(req ,res) {
+module.exports = function(app, auth) {
+  app.get('/api/notes', auth, function(req ,res) {
     Note.find({}, function(err, data) {
       if (err) return res.status(500).send('there was an error');
       res.json(data);
@@ -16,7 +16,7 @@ module.exports = function(app) {
     });
   });
 
-  app.post('/api/notes', function(req, res) {
+  app.post('/api/notes', auth, function(req, res) {
     var note = new Note(req.body);
     note.save(function(err, data) {
       if (err) return res.status(500).send('there was an error');
