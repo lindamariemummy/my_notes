@@ -6,8 +6,8 @@ var jwt = require('jwt-simple');
 
 var userSchema = mongoose.Schema({
   basic: {
-    email: 'String',
-    password: 'String'
+    email: String,
+    password: String
   }
 });
 
@@ -19,13 +19,22 @@ userSchema.methods.generateHash = function(password) {
 userSchema.methods.validPassword = function(password) {
 	// first param: password user typed in
 	// 2nd param: will behashed password stored in db
+
 	return bcrypt.compareSync(password, this.basic.password);
 };
 
+//userSchema.path('password').validate(function (password) {
+//  return password.length >= 8;
+//}, 'password not long enough');
+
+//the ID from the mongo database is what's passed back and forth
 userSchema.methods.generateToken = function(secret) {
 	var self = this;
+	var expiration = Date.now() + 600000; //token expires in 10 minutes
+	console.log("expires:", expiration);
 	var token = jwt.encode({
-		iss: self._id //aka ID
+		iss: self._id, //aka ID
+		exp: expiration.toString() //add issue date
 	}, secret);
 	return token;
 };
