@@ -16,7 +16,7 @@ app.use(bodyparser.urlencoded({extended:true}));
 app.use(bodyparser.json());
 
 //sets variables within the program (can be retrieved with app.get())
-app.set('jwtSecret', process.env.JWT_SECRET || 'changethis');
+app.set('jwtSecret', process.env.JWT_SECRET || 'totallysecretsecret');
 //app.set('secret', process.env.SECRET || 'definitelychangethis');
 //console.log(app.get('jwtSecret'));
 
@@ -28,11 +28,12 @@ require('./lib/passport')(passport);
 
 //passes in the secret to decode the jwt
 var jwtauth = require('./lib/jwt_auth')(app.get('jwtSecret'));
+var jwtadminauth = require('./lib/jwt_admin_auth')(app.get('jwtSecret'));
 
 //var notesRouter = express.Router();
 //notesRouter.use(jwtauth);
 
-require('./routes/users_routes')(app, passport);
+require('./routes/users_routes')(app, passport, jwtadminauth);
 require('./routes/notes_routes')(app, jwtauth);
 
 //now all routes must contain the /v1 path

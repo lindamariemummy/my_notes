@@ -3,7 +3,7 @@
 var User = require('../models/user');
 var checkPassword = require('../lib/checkPassword.js');
 
-module.exports = function(app, passport) {
+module.exports = function(app, passport, jwtadminauth) {
 //user login is get request
 
 //create new user is a post request
@@ -40,11 +40,10 @@ module.exports = function(app, passport) {
     });
   });
 
-  app.delete('/api/users', function(req, res) {
+  app.delete('/api/users', jwtadminauth, function(req, res) {
     User.findOne({'basic.email': req.body.email}, function(err, user) {
       if (err) return res.status(500).send('server error');
       if (!user) return res.status(500).send('user not found');
-      //check for admin here
 
       User.remove({'basic.email': req.body.email}, function(err) {
         if (err) return res.status(500).send('server error');

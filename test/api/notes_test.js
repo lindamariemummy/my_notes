@@ -9,7 +9,9 @@ require('../../server');
 var expect = chai.expect;
 
 describe('basic notes/users tests', function() {
-  var id1, id2, jwt, loginJSON = {email: 'medhj3', password: 'foobar123'};
+  var id1, id2, jwt, jwtadmin;
+  var loginJSON = {email: 'h'+Date.now(), password: 'foobar123', adm: "false"};
+  var loginJSONadmin = {email: 'gf' + Date.now(), password: 'thisisapassword', adm: "true"};
   it('should not be able to do anything without authentication', function(done) {
     //chai.request('https://fathomless-refuge-1297.herokuapp.com')
     chai.request('http://localhost:3000')
@@ -45,6 +47,21 @@ describe('basic notes/users tests', function() {
       expect(res.body).to.have.property('jwt');
       jwt = res.body.jwt;
       expect(jwt).to.be.a('string');
+      done();
+    });
+  });
+  it('should be able to create a new admin', function(done) {
+    //chai.request('https://fathomless-refuge-1297.herokuapp.com')
+    chai.request('http://localhost:3000')
+    .post('/api/users')
+    .send(loginJSONadmin)
+    .end(function(err, res) {
+      //console.log(err);
+      expect(err).to.eql(null);
+      expect(res.statusCode).to.eql(200);
+      expect(res.body).to.have.property('jwt');
+      jwtadmin = res.body.jwt;
+      expect(jwtadmin).to.be.a('string');
       done();
     });
   });
@@ -125,7 +142,19 @@ describe('basic notes/users tests', function() {
       done();
     });
   });
-    it('should be able to delete a user', function(done) {
+  it('only admins should be able to  to delete a user', function(done) {
+    chai.request('http://localhost:3000')
+    //chai.request('https://fathomless-refuge-1297.herokuapp.com')
+    .delete('/api/users')
+    .set({'jwt':jwtadmin})
+    .send(loginJSON)
+    .end(function(err, res) {
+      expect(err).to.eql(null);
+      expect(res.statusCode).to.eql(200);
+      done();
+    });
+  });
+    it('only admins should be able to  to delete a user', function(done) {
     chai.request('http://localhost:3000')
     //chai.request('https://fathomless-refuge-1297.herokuapp.com')
     .delete('/api/users')
@@ -133,7 +162,7 @@ describe('basic notes/users tests', function() {
     .send(loginJSON)
     .end(function(err, res) {
       expect(err).to.eql(null);
-      expect(res.statusCode).to.eql(200);
+      expect(res.statusCode).to.eql(403);
       done();
     });
   });

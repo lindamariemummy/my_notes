@@ -35,7 +35,7 @@ userSchema.methods.generateToken = function(secret) {
 	var token = jwt.encode({
 		iss: self._id, //aka ID
 		exp: expiration.toString(), //add issue date
-		adm: false //can be changed if the user is an admin
+		adm: true //can be changed if the user is an admin
 	}, secret);
 	return token;
 };
