@@ -75,6 +75,18 @@ describe('basic notes/users tests', function() {
       done();
     });
   });
+  it('should be able to save second note', function(done) {
+    chai.request('http://localhost:3000')
+    //chai.request('https://fathomless-refuge-1297.herokuapp.com')
+    .post('/api/notes')
+    .set({'jwt':jwt})
+    .send({noteBody: 'another note', noteAuthor: 'you'})
+    .end(function(err, res) {
+      //console.log(res);
+      expect(res.statusCode).to.eql(200);
+      done();
+    });
+  });
   it('should be able to get an index', function(done) {
     chai.request('http://localhost:3000')
     //chai.request('https://fathomless-refuge-1297.herokuapp.com')
@@ -83,8 +95,8 @@ describe('basic notes/users tests', function() {
     .end(function(err, res) {
       expect(err).to.eql(null);
       expect(Array.isArray(res.body)).to.be.true;
-      id1 = res.body[1]._id;
-      id2 = res.body[2]._id;
+      id1 = res.body[0]._id;
+      id2 = res.body[1]._id;
       //console.log("id1", id1);
       done();
     });
@@ -97,7 +109,7 @@ describe('basic notes/users tests', function() {
     .end(function(err, res) {
       expect(err).to.eql(null);
       //console.log(res.body.noteBody)
-      expect(res.body.noteBody).to.eql('Hello I am a new note');
+      expect(res.body.noteBody).to.eql('hi');
       done();
     });
   });
