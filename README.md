@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/lindamariemummy/json-read-write-database.svg?branch=master)](https://travis-ci.org/lindamariemummy/json-read-write-database)
+[![Build Status](https://travis-ci.org/lindamariemummy/sea-b24-notes.svg?branch=master)](https://travis-ci.org/lindamariemummy/sea-b24-notes)
 
 ==============================
 The notes demo app.
