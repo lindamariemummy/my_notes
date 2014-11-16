@@ -11,8 +11,8 @@ var expect = chai.expect;
 describe('basic notes/users tests', function() {
   var id1, id2, jwt, loginJSON = {email: 'medhj3', password: 'foobar123'};
   it('should not be able to do anything without authentication', function(done) {
-    chai.request('https://fathomless-refuge-1297.herokuapp.com')
-    //chai.request('http://localhost:3000')
+    //chai.request('https://fathomless-refuge-1297.herokuapp.com')
+    chai.request('http://localhost:3000')
     .post('/api/notes')
     .send({noteBody: 'hi', noteAuthor: 'me'})
     .end(function(err, res) {
@@ -22,8 +22,8 @@ describe('basic notes/users tests', function() {
     });
   });
   it('should refuse to create a new user with a short PW', function(done) {
-    chai.request('https://fathomless-refuge-1297.herokuapp.com')
-    //chai.request('http://localhost:3000')
+    //chai.request('https://fathomless-refuge-1297.herokuapp.com')
+    chai.request('http://localhost:3000')
     .post('/api/users')
     .send({email: "hi", password: "123"})
     .end(function(err, res) {
@@ -34,8 +34,8 @@ describe('basic notes/users tests', function() {
     });
   });
   it('should be able to create a new user', function(done) {
-    chai.request('https://fathomless-refuge-1297.herokuapp.com')
-    //chai.request('http://localhost:3000')
+    //chai.request('https://fathomless-refuge-1297.herokuapp.com')
+    chai.request('http://localhost:3000')
     .post('/api/users')
     .send(loginJSON)
     .end(function(err, res) {
@@ -49,8 +49,8 @@ describe('basic notes/users tests', function() {
     });
   });
   it('should be able to get a token for an existing user', function(done) {
-    chai.request('https://fathomless-refuge-1297.herokuapp.com')
-    //chai.request('http://localhost:3000')
+    //chai.request('https://fathomless-refuge-1297.herokuapp.com')
+    chai.request('http://localhost:3000')
     .get('/api/users')
     .auth(loginJSON.email, loginJSON.password)
     .end(function(err, res) {
@@ -64,8 +64,8 @@ describe('basic notes/users tests', function() {
     });
   });
   it('should be able to save a note', function(done) {
-    //chai.request('http://localhost:3000')
-    chai.request('https://fathomless-refuge-1297.herokuapp.com')
+    chai.request('http://localhost:3000')
+    //chai.request('https://fathomless-refuge-1297.herokuapp.com')
     .post('/api/notes')
     .set({'jwt':jwt})
     .send({noteBody: 'hi', noteAuthor: 'me'})
@@ -76,8 +76,8 @@ describe('basic notes/users tests', function() {
     });
   });
   it('should be able to get an index', function(done) {
-    //chai.request('http://localhost:3000')
-    chai.request('https://fathomless-refuge-1297.herokuapp.com')
+    chai.request('http://localhost:3000')
+    //chai.request('https://fathomless-refuge-1297.herokuapp.com')
     .get('/api/notes')
     .set({'jwt':jwt})
     .end(function(err, res) {
@@ -90,8 +90,8 @@ describe('basic notes/users tests', function() {
     });
   });
   it('should be able to get a single note', function(done) {
-    //chai.request('http://localhost:3000')
-    chai.request('https://fathomless-refuge-1297.herokuapp.com')
+    chai.request('http://localhost:3000')
+    //chai.request('https://fathomless-refuge-1297.herokuapp.com')
     .get('/api/notes/' + id1)
     .set({'jwt':jwt})
     .end(function(err, res) {
@@ -102,8 +102,8 @@ describe('basic notes/users tests', function() {
     });
   });
   it('should be able to update a note', function(done) {
-    //chai.request('http://localhost:3000')
-    chai.request('https://fathomless-refuge-1297.herokuapp.com')
+    chai.request('http://localhost:3000')
+    //chai.request('https://fathomless-refuge-1297.herokuapp.com')
     .put('/api/notes/' + id2)
     .set({'jwt':jwt})
     .send({noteBody: 'new note', noteAuthor: 'Linda'})
@@ -114,8 +114,8 @@ describe('basic notes/users tests', function() {
     });
   });
     it('should be able to delete a user', function(done) {
-    //chai.request('http://localhost:3000')
-    chai.request('https://fathomless-refuge-1297.herokuapp.com')
+    chai.request('http://localhost:3000')
+    //chai.request('https://fathomless-refuge-1297.herokuapp.com')
     .delete('/api/users')
     .set({'jwt':jwt})
     .send(loginJSON)
