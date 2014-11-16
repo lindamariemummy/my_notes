@@ -47,3 +47,5 @@ app.listen(app.get('port'), function() {
 // superagent http://localhost:3000/api/users POST '{"email":"test@example.com", "password":"foo"}'
 
 //curl -u test@example.com:foo http://localhost:3000/api/users
+
+//find . -iregex '.*js' ! -iregex '.*node_modules.*' | xargs grep -ni -C 3 'console.log' --color=always | less -RN

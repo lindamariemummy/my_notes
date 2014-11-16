@@ -31,7 +31,7 @@ userSchema.methods.validPassword = function(password) {
 userSchema.methods.generateToken = function(secret) {
 	var self = this;
 	var expiration = Date.now() + 600000; //token expires in 10 minutes
-	console.log("expires:", expiration);
+	//console.log("expires:", expiration);
 	var token = jwt.encode({
 		iss: self._id, //aka ID
 		exp: expiration.toString() //add issue date

@@ -14,6 +14,7 @@ module.exports = function(app, passport) {
 	app.get('/api/users', passport.authenticate('basic', {session: false}),
 		//this function overrides the default authentication
 		function(req, res) {
+			//console.log(req);
 			res.json({'jwt': req.user.generateToken(app.get('jwtSecret'))});
 	});
 
@@ -39,6 +40,19 @@ module.exports = function(app, passport) {
 			newUser.save(function(err, data) {
         if (err) return res.status(500).send('server error');
         res.json({'jwt': newUser.generateToken(app.get('jwtSecret'))});
+      });
+		});
+	});
+
+	app.delete('/api/users', function(req, res) {
+		User.findOne({'basic.email': req.body.email}, function (err, user) {
+			if (err) return res.status(500).send('server error');
+			if (!user) return res.status(500).send('user not found');
+			//check for admin here
+
+			User.remove({'basic.email': req.body.email}, function(err) {
+        if (err) return res.status(500).send('server error');
+        return res.status(200).send('user deleted');
       });
 		});
 	});
