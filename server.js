@@ -5,11 +5,10 @@ var passport = require('passport');
 var app = express();
 
 // connect to mongoose
-//var mongodbUri = //'mongodb://heroku_app31292297:hfvmdkr6ndssg4cbimge6oinam@ds051740.mongolab.com:51740/heroku_app31292297';
-//mongoose.connect(mongodbUri);
 mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost/LindaDB');
 
 //use bodyparser middleware for encoded (thanks to Jake for helping me )
+//necessary to use postman!
 app.use(bodyparser.urlencoded({extended:true}));
 
 //use bodyparser middleware
@@ -17,8 +16,6 @@ app.use(bodyparser.json());
 
 //sets variables within the program (can be retrieved with app.get())
 app.set('jwtSecret', process.env.JWT_SECRET || 'totallysecretsecret');
-//app.set('secret', process.env.SECRET || 'definitelychangethis');
-//console.log(app.get('jwtSecret'));
 
 //use passport middleware
 app.use(passport.initialize());
@@ -43,6 +40,7 @@ app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), function() {
   console.log('server running on port: %d', app.get('port'));
 });
+
 
 // superagent http://localhost:3000/api/users POST '{"email":"test@example.com", "password":"foo"}'
 

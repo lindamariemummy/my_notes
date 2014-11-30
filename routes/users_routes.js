@@ -13,7 +13,6 @@ module.exports = function(app, passport, jwtadminauth) {
   app.get('/api/users', passport.authenticate('basic', {session: false}),
     //this function overrides the default authentication
     function(req, res) {
-      //console.log(req);
       res.json({jwt: req.user.generateToken(app.get('jwtSecret'))});
     }
   );
