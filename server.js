@@ -40,8 +40,6 @@ app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), function() {
   console.log('server running on port: %d', app.get('port'));
 });
-
-
 // superagent http://localhost:3000/api/users POST '{"email":"test@example.com", "password":"foo"}'
 
 //curl -u test@example.com:foo http://localhost:3000/api/users
